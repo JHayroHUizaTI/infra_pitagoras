@@ -1,0 +1,6 @@
+---
+- hosts: smb
+  become: true
+  become_user: root
+  roles:
+    - bertvv.samba

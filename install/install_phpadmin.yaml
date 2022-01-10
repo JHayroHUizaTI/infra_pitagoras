@@ -1,0 +1,8 @@
+- hosts: mysql
+  become: yes
+  become_user: root
+  vars_files:
+    - roles/geerlingguy.phpmyadmin/vars/main.yaml
+
+  roles:
+    - { role: geerlingguy.phpmyadmin }

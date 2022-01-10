@@ -1,0 +1,4 @@
+[servers]
+mysql ansible_user=vagrant ansible_host=192.168.1.212 ansible_password=vagrant
+smb   ansible_user=vagrant ansible_host=192.168.1.214 ansible_password=vagrant
+syslog   ansible_user=vagrant ansible_host=192.168.1.215 ansible_password=vagrant
