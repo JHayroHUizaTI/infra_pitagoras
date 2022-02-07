@@ -1,0 +1,5 @@
+- hosts: nginx_balanceador
+  become: true
+  become_user: root
+  roles:
+    - { role: geerlingguy.nginx } 

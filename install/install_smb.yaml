@@ -2,5 +2,29 @@
 - hosts: smb
   become: true
   become_user: root
+  pre_tasks:
+    - name: create groups
+      group:
+        name: smb_group
+        state: present
+    - name: Create users
+      user:
+        name: "{{ item }}"
+        groups: smb_group
+        append: true
+      with_items:
+        - usr1
+        - usr2
+        - usr3
+
+  vars:
+    samba_users:
+      - name: usr1
+        password: password
+      - name: usr2
+        password: password
+      - name: usr3
+        password: password
+        
   roles:
-    - bertvv.samba
+    - geerlingguy.samba

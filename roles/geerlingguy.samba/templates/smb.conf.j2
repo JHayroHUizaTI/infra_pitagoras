@@ -1,0 +1,16 @@
+[global]
+workgroup = pitagoras
+server string = Samba Server %v
+netbios name = pitagoras
+security = user
+map to guest = bad user
+dns proxy = no
+idmap config * : backend = tdb
+hosts allow = 192.168.1.
+#============================ Share Definitions ============================== 
+[pitagoras]
+path = {{ samba_dir }}
+comment = first time
+browsable =yes
+writable = yes
+guest ok = yes

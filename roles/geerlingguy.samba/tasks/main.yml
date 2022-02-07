@@ -1,0 +1,73 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Ensure Samba-related packages are installed (RedHat).
+  package:
+    name:
+      - samba
+      - samba-client
+      - samba-common
+      - cifs-utils
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure Samba-related packages are installed (Debian).
+  apt:
+    name:
+      - samba
+      - samba-common
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure Samba is running and set to start on boot.
+  service:
+    name: "{{ samba_daemon }}"
+    state: started
+    enabled: true
+
+- name: install policycoreutils
+  yum:
+    name: policycoreutils-python*
+    state: present
+
+- name: create samba dir
+  file:
+    path: "{{ samba_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Allow samba to selinux
+  sefcontext:
+    target: "/{{ samba_dir }}(/.*)?"
+    setype: samba_share_t
+    state: present
+
+- name: Send smb.conf.j2
+  template:
+    src: smb.conf.j2
+    dest: "{{ samba_config_file }}"
+  notify:
+    - restart smb
+
+- name: Run restore context
+  shell: restorecon -vRF "{{ samba_dir }}"
+
+- name: Create Samba users if they don't exist yet
+  shell: >
+    set -o nounset -o pipefail -o errexit &&
+    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
+    || (echo {{ item.password }}; echo {{ item.password }}) \
+    | smbpasswd -s -a {{ item.name }}
+  args:
+    executable: /bin/bash
+  with_items: "{{ samba_users }}"
+  register: create_user_output
+  changed_when: "'Added user' in create_user_output.stdout"
+
+  
+  
+ 
+        

@@ -1,0 +1,5 @@
+- hosts: nginxweb
+  become: true
+  become_user: root
+  roles:
+    - { role: geerlingguy.nginx } 

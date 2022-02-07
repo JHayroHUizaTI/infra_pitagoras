@@ -13,9 +13,9 @@
         - timemachine
 
   vars:
-    samba_netbios_name: SAMBA_TEST
+    samba_netbios_name: pitagoras
     samba_server_string: 'Welcome to the test file server'
-    samba_workgroup: TESTGROUP
+    samba_workgroup: pitagoras
     
     samba_global_include: global-include.conf
 
@@ -26,7 +26,7 @@
     samba_log: /var/log/samba.log
     samba_log_size: 60000
     samba_log_level: '3 passdb:5 auth:10 winbind:2 '
-
+    samba_server_max_protocol: SMB3
 
     samba_map_to_guest: Never
     samba_users:

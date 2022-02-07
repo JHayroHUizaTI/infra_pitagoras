@@ -28,6 +28,7 @@
     samba_load_homes: true
     samba_load_printers: false
     samba_create_varwww_symlinks: true
+    samba_server_max_protocol: SMB3
 
     samba_log: /var/log/samba.log
     samba_log_size: 60000
@@ -41,9 +42,12 @@
       - name: smb_usr3
         password: password
     samba_username_map:
-      - from: 'User Two'
-        to: smb_usr2
-   
+      - from: 'User Une'
+        to: smb_usr1 
+#      - from: 'User Two'
+#        to: smb_usr2
+#      - from: 'User Three'
+#        to: smb_usr3
     samba_shares_root: /srv/samba
     samba_shares:
       - name: pictures

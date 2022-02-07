@@ -1,0 +1,6 @@
+---
+samba_daemon: smb
+samba_dir: /var/samba/pitagoras
+samba_config_file: /etc/samba/smb.conf
+
+
